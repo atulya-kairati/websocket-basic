@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Cockets</title>
+</head>
+<body>
+    <div id="input-place">
+        <input id="input" type="text"/> 
+        <button onclick="onClickSend()">Send</button>
+    </div>
+    <div id="output-space">
+        <ul id="msg-list">
+
+        </ul>
+    </div>
+</body>
+
+<script>
+const ws = new WebSocket('ws://localhost:8000');
+
+ws.onmessage = msg => {
+    const msgNode = document.createElement('li');
+    msgNode.innerHTML = msg.data;
+
+    const msgList = document.getElementById('msg-list');
+    msgList.appendChild(msgNode)
+};
+
+function onClickSend() {
+    const msg = document.getElementById('input').value;
+    ws.send(msg);
+}
+
+
+</script>
+</html>
